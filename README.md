@@ -1,36 +1,51 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Admin App
 
-## Getting Started
+This is the admin control center for the school platform.
 
-First, run the development server:
+## Features
+
+- Admin-only authentication with NextAuth
+- Teacher management
+- Turma management
+- Assignment of turmas to teachers
+- Responsive sidebar and mobile menu
+- Prisma-based data layer
+
+## Setup
+
+1. Copy `.env.example` to `.env`.
+2. Update the values.
+3. Generate Prisma client and run migrations:
+
+```bash
+npx prisma generate
+npx prisma db push
+```
+
+4. Start the app:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Default admin account
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Create an admin user in the database manually or through a seed script. Example:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npx prisma studio
+```
 
-## Learn More
+Then create a user with:
+- email: admin@school.test
+- name: Admin
+- role: ADMIN
+- passwordHash: use bcrypt to hash a password such as `admin123`
 
-To learn more about Next.js, take a look at the following resources:
+## Environment variables
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```env
+DATABASE_URL="file:./dev.db"
+NEXTAUTH_SECRET="replace-with-a-long-random-secret"
+NEXTAUTH_URL="http://localhost:3000"
+```

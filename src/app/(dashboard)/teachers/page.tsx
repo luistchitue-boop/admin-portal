@@ -25,7 +25,7 @@ async function createTeacher(formData: FormData) {
     data: {
       name,
       email: email.toLowerCase(),
-      passwordHash: hashed,
+      password: hashed,
       role: "TEACHER",
       teacher: {
         create: {

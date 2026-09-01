@@ -18,7 +18,7 @@ async function updateSettings(formData: FormData) {
     where: { id: session.user.id },
     data: {
       name: name || session.user.name || "",
-      ...(password ? { passwordHash: await hash(password, 10) } : {}),
+      ...(password ? { password: await hash(password, 10) } : {}),
     },
   });
 

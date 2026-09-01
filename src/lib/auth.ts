@@ -34,7 +34,14 @@ export const authOptions: NextAuthOptions = {
           return null;
         }
 
-        const isValid = await compare(credentials.password, user.passwordHash);
+        const storedPassword = (user as { password?: string | null }).password ?? null;
+        const role = (user as { role?: AppRole } | null)?.role ?? "TEACHER";
+
+        if (!storedPassword) {
+          return null;
+        }
+
+        const isValid = await compare(credentials.password, storedPassword);
 
         if (!isValid) {
           return null;
@@ -44,7 +51,7 @@ export const authOptions: NextAuthOptions = {
           id: user.id,
           email: user.email,
           name: user.name,
-          role: (user.role as AppRole) ?? "TEACHER",
+          role,
         };
       },
     }),
